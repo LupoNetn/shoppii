@@ -1,7 +1,6 @@
 import { Menu, Search, SearchIcon, Settings, ShoppingCart, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 
 const navLinks = [
   { name: "Shop", link: "#" },
@@ -12,21 +11,39 @@ const navLinks = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [showMenu, setShowMenu] = useState(false); // controls if element is mounted
+  const menuRef = useRef(null);
+
   const openMenu = () => {
-    setOpen((prev) => !prev);
+    if (open) {
+      // trigger close animation first
+      gsap.to(menuRef.current, {
+        opacity: 0,
+        x: -100,
+        duration: 0.6,
+        ease: "power1.inOut",
+        onComplete: () => {
+          setShowMenu(false); // unmount after animation
+          setOpen(false);
+        },
+      });
+    } else {
+      // mount and animate in
+      setShowMenu(true);
+      setOpen(true);
+    }
   };
 
-  useGSAP(() => {
-  if (open) {
-    gsap.from("#mobile-menu", {
-      opacity: 0,
-      x: -100,
-      duration: 1,
-      ease: "power1.inOut",
-    });
-  }
-}, [open]); // run again when open changes
-
+  // run open animation after the element is mounted
+  useEffect(() => {
+    if (showMenu && open) {
+      gsap.fromTo(
+        menuRef.current,
+        { opacity: 0, x: -100 },
+        { opacity: 1, x: 0, duration: 0.6, ease: "power1.inOut" }
+      );
+    }
+  }, [showMenu, open]);
 
   return (
     <>
@@ -35,13 +52,17 @@ const Navbar = () => {
           <div className="flex gap-6 items-center">
             {/* MOBILE MENU */}
             <div className="block md:hidden">
-              {open ? (
+              {showMenu ? (
                 <div className="relative">
                   <button onClick={openMenu} className="cursor-pointer mt-2">
                     <X />
                   </button>
 
-                  <div id="mobile-menu" className="absolute bg-white left-4 py-8 w-[200px] px-2 border border-gray-400 rounded-2xl">
+                  {/* Animate this div in/out */}
+                  <div
+                    ref={menuRef}
+                    className="absolute bg-white left-4 py-8 w-[200px] px-2 border border-gray-400 rounded-2xl"
+                  >
                     <ul className="flex flex-col items-left gap-5">
                       {navLinks.map((link) => (
                         <li
@@ -67,6 +88,7 @@ const Navbar = () => {
             </div>
           </div>
 
+          {/* DESKTOP NAV */}
           <div className="hidden md:flex md:items-center md:gap-4">
             <ul className="flex items-center gap-5">
               {navLinks.map((link) => (
@@ -102,14 +124,13 @@ const Navbar = () => {
             <div>
               <SearchIcon />
             </div>
-             <div>
-                <ShoppingCart />
-              </div>
-              <div>
-                <Settings />
-              </div>
+            <div>
+              <ShoppingCart />
+            </div>
+            <div>
+              <Settings />
+            </div>
           </div>
-
         </div>
       </nav>
     </>
