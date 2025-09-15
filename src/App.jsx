@@ -29,7 +29,7 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <>
-      <div>
+      <div className="px-3 md:px-5 lg:px-7">
         <Navbar />
         <RouterProvider router={router} />
         <Footer />
