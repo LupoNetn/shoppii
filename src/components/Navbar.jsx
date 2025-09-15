@@ -1,5 +1,7 @@
 import { Menu, Search, SearchIcon, Settings, ShoppingCart, X } from "lucide-react";
 import React, { useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 const navLinks = [
   { name: "Shop", link: "#" },
@@ -14,6 +16,18 @@ const Navbar = () => {
     setOpen((prev) => !prev);
   };
 
+  useGSAP(() => {
+  if (open) {
+    gsap.from("#mobile-menu", {
+      opacity: 0,
+      x: -100,
+      duration: 1,
+      ease: "power1.inOut",
+    });
+  }
+}, [open]); // run again when open changes
+
+
   return (
     <>
       <nav className="py-5">
@@ -27,7 +41,7 @@ const Navbar = () => {
                     <X />
                   </button>
 
-                  <div className="absolute bg-white left-4 py-8 w-[200px] px-2 border border-gray-400 rounded-2xl">
+                  <div id="mobile-menu" className="absolute bg-white left-4 py-8 w-[200px] px-2 border border-gray-400 rounded-2xl">
                     <ul className="flex flex-col items-left gap-5">
                       {navLinks.map((link) => (
                         <li
