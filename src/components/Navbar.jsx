@@ -67,7 +67,7 @@ const Navbar = () => {
                       {navLinks.map((link) => (
                         <li
                           key={link.name}
-                          className="text-gray-900 text-md md:text-lg"
+                          className="text-gray-900 text-sm md:text-lg"
                         >
                           {link.name}
                         </li>
