@@ -1,23 +1,53 @@
 import React from "react";
 import { heroStatics } from "../constants/constants";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const HomePage = () => {
+  useGSAP(() => {
+    // left content animates when left content enters view
+    gsap.from("#left-content", {
+      y: -200,
+      x: -200,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: "#left-content",
+        start: "top 80%", // when top of left-content hits 80% viewport
+        toggleActions: "restart pause resume pause",
+      },
+    });
+
+    // right content animates when right content enters view
+    gsap.from("#right-content", {
+      y: 200,
+      x: 200,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: "#right-content",
+        start: "top 80%",
+        toggleActions: "restart pause resume pause",
+      },
+    });
+  });
+
   return (
-    <section
-      id="home"
-      className="relative overflow-hidden"
-    >
+    <section id="home" className="relative overflow-hidden">
       <div className="py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left content */}
-          <div className="space-y-6">
+          <div id="left-content" className="space-y-6">
             <h1 className="text-3xl md:text-4xl md:w-[70%] lg:text-5xl xl:text-6xl font-extrabold leading-tight">
               FIND CLOTHES THAT MATCH YOUR STYLE
             </h1>
             <p className="text-gray-800 md:text-sm lg:text-base xl:text-lg max-w-lg">
               Browse through our diverse range of meticulously crafted garments,
-              designed to bring out your individuality and cater to your sense of
-              style.
+              designed to bring out your individuality and cater to your sense
+              of style.
             </p>
             <button className="inline-block px-6 py-3 bg-black text-white rounded-full text-sm md:text-base hover:bg-gray-800 transition-colors">
               Shop Now
@@ -39,16 +69,18 @@ const HomePage = () => {
           </div>
 
           {/* Right content */}
-          <div className="relative w-full flex justify-center lg:justify-end">
-            {/* Decorative stars */}
+          <div
+            id="right-content"
+            className="relative w-full flex justify-center lg:justify-end"
+          >
             <img
               className="absolute top-0 left-0 w-10 md:w-14 lg:w-16 animate-pulse"
-              src="bigStar.png"
+              src="/bigStar.png"
               alt="decorative star"
             />
             <img
               className="absolute bottom-0 right-0 w-6 md:w-10 lg:w-12 animate-pulse delay-150"
-              src="smallStar.png"
+              src="/smallStar.png"
               alt="decorative star"
             />
 
