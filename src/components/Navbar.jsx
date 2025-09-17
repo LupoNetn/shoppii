@@ -1,4 +1,11 @@
-import { Menu, Search, SearchIcon, Settings, ShoppingCart, X } from "lucide-react";
+import {
+  Menu,
+  Search,
+  SearchIcon,
+  Settings,
+  ShoppingCart,
+  X,
+} from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 
@@ -55,7 +62,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="py-5">
+      <nav className="py-5 app-container">
         <div className="flex items-center justify-between gap-6">
           <div className="flex gap-6 items-center">
             {/* MOBILE MENU */}
@@ -73,7 +80,8 @@ const Navbar = () => {
                 {showMenu && (
                   <div
                     ref={menuRef}
-                    className="absolute bg-white left-4 py-8 w-[200px] px-2 border border-gray-400 rounded-2xl"
+                    className="absolute left-4 py-8 w-[200px] px-2 border border-gray-400 rounded-2xl
+             backdrop-blur-2xl bg-gray-200/95" // semi-opaque but less see-through
                   >
                     <ul className="flex flex-col items-left gap-5">
                       {navLinks.map((link) => (

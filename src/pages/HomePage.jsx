@@ -1,5 +1,5 @@
 import React from "react";
-import { heroStatics } from "../constants/constants";
+import { heroStatics, partners } from "../constants/constants";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -36,7 +36,8 @@ const HomePage = () => {
   });
 
   return (
-    <section id="home" className="relative overflow-hidden">
+    <>
+    <section id="home" className="relative overflow-hidden app-container">
       <div className="py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left content */}
@@ -49,7 +50,7 @@ const HomePage = () => {
               designed to bring out your individuality and cater to your sense
               of style.
             </p>
-            <button className="inline-block px-6 py-3 bg-black text-white rounded-full text-sm md:text-base hover:bg-gray-800 transition-colors">
+            <button className="max-sm:w-full inline-block px-6 py-3 bg-black text-white rounded-full text-sm md:text-base hover:bg-gray-800 transition-colors">
               Shop Now
             </button>
 
@@ -74,12 +75,12 @@ const HomePage = () => {
             className="relative w-full flex justify-center lg:justify-end"
           >
             <img
-              className="absolute top-0 left-0 w-10 md:w-14 lg:w-16 animate-pulse"
+              className="absolute top-0 left-0 w-10 md:w-14 lg:w-16 animate-pulse z-50"
               src="/bigStar.png"
               alt="decorative star"
             />
             <img
-              className="absolute bottom-0 right-0 w-6 md:w-10 lg:w-12 animate-pulse delay-150"
+              className="absolute bottom-0 right-0 w-6 md:w-10 lg:w-12 animate-pulse delay-150 z-50"
               src="/smallStar.png"
               alt="decorative star"
             />
@@ -95,6 +96,15 @@ const HomePage = () => {
         </div>
       </div>
     </section>
+
+    <div className="bg-black flex flex-wrap p-3 md:p-5 justify-between">
+      {partners.map((partner) => (
+        <div key={partner.img}>
+          <img src={partner.img} alt="partners-logo" className="md:w-full w-20"/>
+        </div>
+      ))}
+    </div>
+    </>
   );
 };
 

@@ -12,3 +12,12 @@ export const heroStatics = [
     stat: "30,000+",
   },
 ];
+
+
+export const partners = [
+    {img: '/versace.png'},
+    {img: '/zara.png'},
+    {img: '/gucci.png'},
+    {img: '/prada.png'},
+    {img: '/calvin-klein.png'}
+]
