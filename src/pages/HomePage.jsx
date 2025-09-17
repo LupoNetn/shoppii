@@ -3,6 +3,7 @@ import { heroStatics, partners } from "../constants/constants";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import ProductsDisplay from "../components/ProductsDisplay";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -104,6 +105,16 @@ const HomePage = () => {
           <img src={partner.img} alt="partners-logo" className="md:w-full w-20"/>
         </div>
       ))}
+    </div>
+
+    {/* NEw ARRIVALS */}
+    <div className="app-container">
+      <ProductsDisplay title='NEW ARRIVALS'/>
+    </div>
+
+    {/* Top Selling */}
+     <div className="app-container">
+      <ProductsDisplay title='TOP SELLING'/>
     </div>
     </>
   );
