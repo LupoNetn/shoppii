@@ -44,10 +44,10 @@ const HomePage = () => {
           {/* Left content */}
           <div id="left-content" className="space-y-6">
             <h1 className="text-3xl md:text-4xl md:w-[70%] lg:text-5xl xl:text-6xl font-extrabold leading-tight">
-              FIND CLOTHES THAT MATCH YOUR STYLE
+              FIND PRODUCTS THAT MATCH YOUR STYLE
             </h1>
             <p className="text-gray-800 md:text-sm lg:text-base xl:text-lg max-w-lg">
-              Browse through our diverse range of meticulously crafted garments,
+              Browse through our diverse range of meticulously crafted products,
               designed to bring out your individuality and cater to your sense
               of style.
             </p>
