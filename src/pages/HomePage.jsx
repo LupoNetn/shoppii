@@ -102,7 +102,7 @@ const HomePage = () => {
     <div className="bg-black flex flex-wrap p-3 md:p-5 justify-between">
       {partners.map((partner) => (
         <div key={partner.img}>
-          <img src={partner.img} alt="partners-logo" className="md:w-full w-20"/>
+          <img src={partner.img} alt="partners-logo" className="md:w-full w-23"/>
         </div>
       ))}
     </div>
