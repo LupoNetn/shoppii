@@ -13,13 +13,21 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false); // controls if element is mounted
   const menuRef = useRef(null);
+  const iconRef = useRef(null);
 
   const openMenu = () => {
+    // animate the icon whenever toggled
+    gsap.fromTo(
+      iconRef.current,
+      { rotate: 0, scale: 1 },
+      { rotate: 180, scale: 1.2, duration: 0.3, ease: "power1.inOut" }
+    );
+
     if (open) {
       // trigger close animation first
       gsap.to(menuRef.current, {
         opacity: 0,
-        x: -100,
+        x: 400,
         duration: 0.6,
         ease: "power1.inOut",
         onComplete: () => {
@@ -39,7 +47,7 @@ const Navbar = () => {
     if (showMenu && open) {
       gsap.fromTo(
         menuRef.current,
-        { opacity: 0, x: -100 },
+        { opacity: 0, x: 400 },
         { opacity: 1, x: 0, duration: 0.6, ease: "power1.inOut" }
       );
     }
@@ -52,13 +60,17 @@ const Navbar = () => {
           <div className="flex gap-6 items-center">
             {/* MOBILE MENU */}
             <div className="block md:hidden">
-              {showMenu ? (
-                <div className="relative">
-                  <button onClick={openMenu} className="cursor-pointer mt-2">
-                    <X />
-                  </button>
+              <div className="relative">
+                <button
+                  onClick={openMenu}
+                  ref={iconRef}
+                  className="cursor-pointer mt-2 transition-transform duration-300"
+                >
+                  {open ? <X /> : <Menu />}
+                </button>
 
-                  {/* Animate this div in/out */}
+                {/* Animate this div in/out */}
+                {showMenu && (
                   <div
                     ref={menuRef}
                     className="absolute bg-white left-4 py-8 w-[200px] px-2 border border-gray-400 rounded-2xl"
@@ -74,14 +86,8 @@ const Navbar = () => {
                       ))}
                     </ul>
                   </div>
-                </div>
-              ) : (
-                <div>
-                  <button onClick={openMenu} className="cursor-pointer mt-2">
-                    <Menu />
-                  </button>
-                </div>
-              )}
+                )}
+              </div>
             </div>
             <div>
               <p className="font-bold text-xl lg:text-3xl">SHOPPII.CO</p>
