@@ -97,6 +97,7 @@ const HomePage = () => {
       </div>
     </section>
 
+    {/* Partners Section */}
     <div className="bg-black flex flex-wrap p-3 md:p-5 justify-between">
       {partners.map((partner) => (
         <div key={partner.img}>
