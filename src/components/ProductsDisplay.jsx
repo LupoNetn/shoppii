@@ -1,7 +1,13 @@
-import React from "react";
 import useFetch from "../hooks/useFetch";
 import { Link } from "react-router";
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
+gsap.registerPlugin(ScrollTrigger);
+
+ 
 // a simple Tailwind spinner component
 const Spinner = () => (
   <div className="flex justify-center items-center w-full h-40">
@@ -24,8 +30,26 @@ const ProductsDisplay = ({ title }) => {
         .slice(start, end)
     : [];
 
+     const sectionRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.from(sectionRef.current.children, {
+      y: 50,
+      opacity: 0,
+      stagger: 0.2,
+      duration: 0.7,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    });
+  }, { scope: sectionRef });
+
+
   return (
-    <section className="mt-10 px-4 md:px-8 py-10">
+    <section ref={sectionRef} className="mt-10 px-4 md:px-8 py-10">
       <h2 className="section-text">
         {title}
       </h2>

@@ -15,19 +15,17 @@ gsap.registerPlugin(ScrollTrigger);
 const HomePage = () => {
   const carouselRef = useRef(null);
   const [email, setEmail] = useState("");
-  const [subscribeStatus, setSubscribeStatus] = useState(null); // 'ok' | 'err' | null
+  const [subscribeStatus, setSubscribeStatus] = useState(null);
 
-  // basic scroll helper for testimonials carousel
   const scroll = (dir) => {
     if (!carouselRef.current) return;
-    const distance = 520; // px per click (matches ~500px card width + gap)
+    const distance = 520;
     carouselRef.current.scrollBy({
       left: dir === "left" ? -distance : distance,
       behavior: "smooth",
     });
   };
 
-  // simple subscribe handler (client-side demo)
   const handleSubscribe = async (e) => {
     e.preventDefault();
     setSubscribeStatus(null);
@@ -39,7 +37,6 @@ const HomePage = () => {
     }
 
     try {
-      // simulate API delay
       await new Promise((res) => setTimeout(res, 600));
       setSubscribeStatus("ok");
       setEmail("");
@@ -49,37 +46,75 @@ const HomePage = () => {
     }
   };
 
-  // hero + testimonials entrance animations
   useGSAP(() => {
-    // hero left
+    // Hero Section
     gsap.from("#left-content", {
-      y: -200,
-      x: -200,
+      x: -50,
       opacity: 0,
       duration: 1,
       ease: "power2.out",
       scrollTrigger: {
         trigger: "#left-content",
         start: "top 80%",
-        toggleActions: "restart pause resume pause",
+        toggleActions: "play none none reverse",
       },
     });
 
-    // hero right
     gsap.from("#right-content", {
-      y: 200,
-      x: 200,
+      x: 50,
       opacity: 0,
       duration: 1,
       ease: "power2.out",
       scrollTrigger: {
         trigger: "#right-content",
         start: "top 80%",
-        toggleActions: "restart pause resume pause",
+        toggleActions: "play none none reverse",
       },
     });
 
-    // testimonials fade in (each card)
+    // Hero Stats
+    gsap.from(".hero-stat", {
+      y: 30,
+      opacity: 0,
+      stagger: 0.2,
+      duration: 0.6,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".hero-stats",
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    // Partners
+    gsap.from(".partner-logo", {
+      y: 50,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 0.8,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: "#partners-section",
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    // Browse By Section
+    gsap.from(".browse-item", {
+      y: 50,
+      opacity: 0,
+      stagger: 0.2,
+      duration: 0.8,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: "#browse-by-section",
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    // Testimonials Section
     gsap.from(".testimonial-card", {
       opacity: 0,
       y: 30,
@@ -89,6 +124,20 @@ const HomePage = () => {
       scrollTrigger: {
         trigger: "#testimonials-section",
         start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    // Newsletter Section
+    gsap.from("#newsletter-section", {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: "#newsletter-section",
+        start: "top 95%",
+        toggleActions: "play none none reverse",
       },
     });
   });
@@ -112,19 +161,22 @@ const HomePage = () => {
               <button className="max-sm:w-full inline-block px-6 py-3 bg-black text-white rounded-full text-sm md:text-base hover:bg-gray-800 transition-colors">
                 Shop Now
               </button>
-
-              <div className="flex flex-wrap gap-6 lg:gap-10 pt-4">
+              <div className="flex flex-wrap gap-6 lg:gap-10 pt-4 hero-stats">
                 {heroStatics.map((s, i) => (
-                  <div key={i} className="space-y-1">
+                  <div key={i} className="space-y-1 hero-stat">
                     <h2 className="font-bold text-xl md:text-2xl">{s.stat}</h2>
-                    <p className="text-sm md:text-base text-gray-600">{s.title}</p>
+                    <p className="text-sm md:text-base text-gray-600">
+                      {s.title}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
-
             {/* Right */}
-            <div id="right-content" className="relative w-full flex justify-center lg:justify-end">
+            <div
+              id="right-content"
+              className="relative w-full flex justify-center lg:justify-end"
+            >
               <img
                 className="absolute top-0 left-0 w-10 md:w-14 lg:w-16 animate-pulse z-10"
                 src="/bigStar.png"
@@ -148,15 +200,22 @@ const HomePage = () => {
       </section>
 
       {/* PARTNERS */}
-      <div className="bg-black flex flex-wrap p-3 md:p-5 justify-between">
+      <div
+        id="partners-section"
+        className="bg-black flex flex-wrap p-3 md:p-5 justify-between"
+      >
         {partners.map((p) => (
           <div key={p.img}>
-            <img src={p.img} alt="partner" className="md:w-full w-23" />
+            <img
+              src={p.img}
+              alt="partner"
+              className="md:w-full w-23 partner-logo"
+            />
           </div>
         ))}
       </div>
 
-      {/* Products */}
+      {/* PRODUCTS */}
       <div className="app-container">
         <ProductsDisplay title="NEW ARRIVALS" />
       </div>
@@ -164,14 +223,17 @@ const HomePage = () => {
         <ProductsDisplay title="TOP SELLING" />
       </div>
 
-      {/* Browse By */}
+      {/* BROWSE BY */}
       <div className="app-container">
         <h2 className="section-text">BROWSE BY DRESS STYLE</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div
+          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+          id="browse-by-section"
+        >
           {browseBy.map((item, idx) => (
             <div
               key={idx}
-              className={`relative bg-cover max-sm:h-40 bg-center rounded-xl overflow-hidden flex items-end p-6 text-white ${
+              className={`browse-item relative bg-cover max-sm:h-40 bg-center rounded-xl overflow-hidden flex items-end p-6 text-white ${
                 idx === 1 || idx === 2 ? "md:col-span-2 md:h-80" : ""
               }`}
               style={{ backgroundImage: `url(${item.img})` }}
@@ -188,32 +250,41 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-3xl font-bold">What Our Customers Say</h2>
-
             <div className="flex gap-2">
               <button
                 aria-label="previous"
                 onClick={() => scroll("left")}
                 className="bg-black text-white rounded-full p-2 hover:bg-gray-800"
               >
-                {/* left chevron */}
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="M15 18l-6-6 6-6" />
                 </svg>
               </button>
-
               <button
                 aria-label="next"
                 onClick={() => scroll("right")}
                 className="bg-black text-white rounded-full p-2 hover:bg-gray-800"
               >
-                {/* right chevron */}
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="M9 18l6-6-6-6" />
                 </svg>
               </button>
             </div>
           </div>
-
           <div
             ref={carouselRef}
             className="flex gap-6 overflow-x-auto snap-x snap-mandatory py-6 no-scrollbar"
@@ -226,7 +297,9 @@ const HomePage = () => {
                 role="group"
                 aria-roledescription="slide"
               >
-                <p className="text-gray-700 mb-6 text-lg leading-relaxed">{t.message}</p>
+                <p className="text-gray-700 mb-6 text-lg leading-relaxed">
+                  {t.message}
+                </p>
                 <h4 className="font-semibold text-gray-900">{t.name}</h4>
               </article>
             ))}
@@ -234,18 +307,21 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* NEWSLETTER BANNER */}
-      <section className="bg-black text-white py-12 px-4">
+      {/* NEWSLETTER */}
+      <section
+        id="newsletter-section"
+        className="bg-black text-white py-12 px-4"
+      >
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
           {/* Text */}
-          <div className="flex-1 text-center md:text-left">
+          <div id="newsletter-text" className="flex-1 text-center md:text-left">
             <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight">
               Stay up to date about our latest offers
             </h3>
           </div>
-
           {/* Form */}
           <form
+            id="newsletter-form"
             onSubmit={handleSubscribe}
             className="w-full md:w-auto flex flex-col sm:flex-row gap-3 items-stretch"
             aria-label="Subscribe to newsletter"
@@ -253,22 +329,15 @@ const HomePage = () => {
             <label htmlFor="newsletter-email" className="sr-only">
               Email address
             </label>
-
             <input
-  id="newsletter-email"
-  type="email"
-  value={email}
-  onChange={(e) => setEmail(e.target.value)}
-  placeholder="Enter your email"
-  className="px-4 py-3 rounded-full 
-             bg-white text-black 
-             placeholder-gray-500 
-             w-full sm:w-[320px] 
-             focus:outline-none"
-  aria-required="true"
-/>
-
-
+              id="newsletter-email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              className="px-4 py-3 rounded-full bg-white text-black placeholder-gray-500 w-full sm:w-[320px] focus:outline-none"
+              aria-required="true"
+            />
             <button
               type="submit"
               className="bg-white text-black px-6 py-3 rounded-full hover:bg-gray-200 transition-colors w-full sm:w-auto"
@@ -277,7 +346,6 @@ const HomePage = () => {
               Subscribe
             </button>
           </form>
-
           {/* Feedback */}
           <div className="w-full md:w-auto text-center md:text-left">
             {subscribeStatus === "ok" && (
