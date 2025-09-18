@@ -26,7 +26,7 @@ const ProductsDisplay = ({ title }) => {
 
   return (
     <section className="mt-10 px-4 md:px-8 py-10">
-      <h2 className="font-extrabold text-xl md:text-3xl text-center mb-8">
+      <h2 className="section-text">
         {title}
       </h2>
 
@@ -70,7 +70,7 @@ const ProductsDisplay = ({ title }) => {
                         alt={item.title}
                         className="
                         w-[90%] max-w-[240px] md:max-w-[280px] lg:max-w-[260px] xl:max-w-[220px]
-                        max-h-64 object-contain shadow-md
+                        max-h-64 object-contain 
                         transition-transform duration-300 hover:scale-105
                       "
                       />

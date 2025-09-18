@@ -10,6 +10,9 @@ body {
   @apply px-3 md:px-5 lg:px-7
 }
 
+@utility section-text {
+  @apply font-extrabold text-xl md:text-3xl text-center mb-8
+}
 
 
 
