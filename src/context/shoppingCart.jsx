@@ -2,7 +2,7 @@ import React, { createContext,useState } from "react";
 
 export const cartContext = createContext();
 
-const shoppingCart = ({children}) => {
+const ShoppingCart = ({children}) => {
   const [cart, setCart] = useState([]);
   const cartLength = cart.length
 
@@ -47,4 +47,4 @@ const shoppingCart = ({children}) => {
   );
 };
 
-export default shoppingCart;
+export default ShoppingCart;
