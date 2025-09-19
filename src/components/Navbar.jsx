@@ -8,12 +8,15 @@ import {
 } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
+import { Link } from "react-router";
+import { NavLink } from "react-router";
 
 const navLinks = [
-  { name: "Shop", link: "#" },
-  { name: "On Sale", link: "#" },
-  { name: "New Arrivals", link: "#" },
-  { name: "Brands", link: "#" },
+  { name: "Shop", link: "/products" },
+  // { name: "On Sale", link: "#" },
+  // { name: "New Arrivals", link: "#" },
+  { name: "Brands", link: "/brands" },
+  { name: "About", link: "/about" },
 ];
 
 const Navbar = () => {
@@ -62,7 +65,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="py-5 app-container">
+      <nav className="py-5 app-container  backdrop-blur-2xl fixed top-0 z-50 w-full">
         <div className="flex items-center justify-between gap-6">
           <div className="flex gap-6 items-center">
             {/* MOBILE MENU */}
@@ -81,16 +84,23 @@ const Navbar = () => {
                   <div
                     ref={menuRef}
                     className="absolute left-4 py-8 w-[200px] px-2 border border-gray-400 rounded-2xl
-             backdrop-blur-2xl bg-gray-200/95" // semi-opaque but less see-through
+            " // semi-opaque but less see-through
                   >
                     <ul className="flex flex-col items-left gap-5">
                       {navLinks.map((link) => (
-                        <li
-                          key={link.name}
-                          className="text-gray-900 text-sm md:text-lg"
+                        <NavLink
+                          to={link.link}
+                          className={({ isActive }) =>
+                            isActive ? "active-link" : "inactive-link"
+                          }
                         >
-                          {link.name}
-                        </li>
+                          <li
+                            key={link.name}
+                            className="font-semibold text-md md:text-sm xl:text-lg"
+                          >
+                            {link.name}
+                          </li>
+                        </NavLink>
                       ))}
                     </ul>
                   </div>
@@ -98,7 +108,9 @@ const Navbar = () => {
               </div>
             </div>
             <div>
-              <p className="font-bold text-xl lg:text-3xl">SHOPPII.CO</p>
+              <Link to="/">
+                <p className="font-bold text-xl lg:text-3xl">SHOPPII.CO</p>
+              </Link>
             </div>
           </div>
 
@@ -106,12 +118,19 @@ const Navbar = () => {
           <div className="hidden md:flex md:items-center md:gap-4">
             <ul className="flex items-center gap-5">
               {navLinks.map((link) => (
-                <li
-                  key={link.name}
-                  className="text-gray-900 text-md md:text-sm xl:text-lg"
+                <NavLink
+                  to={link.link}
+                  className={({ isActive }) =>
+                    isActive ? "active-link" : "inactive-link"
+                  }
                 >
-                  {link.name}
-                </li>
+                  <li
+                    key={link.name}
+                    className="font-semibold text-md md:text-sm xl:text-lg"
+                  >
+                    {link.name}
+                  </li>
+                </NavLink>
               ))}
             </ul>
 
@@ -125,8 +144,13 @@ const Navbar = () => {
             </div>
 
             <div className="flex gap-3 items-center">
-              <div>
-                <ShoppingCart />
+              <div className="relative">
+                <div className="bg-black text-white p-1 absolute bottom-3 left-3 border border-black rounded-full text-xs h-5 w-5 flex justify-center items-center">
+                  20
+                </div>
+                <NavLink to="/cart">
+                  <ShoppingCart />
+                </NavLink>
               </div>
               <div>
                 <Settings />
@@ -134,17 +158,25 @@ const Navbar = () => {
             </div>
           </div>
 
+          {/* Mobile cart section */}
           <div className="flex items-center gap-3 md:hidden">
             <div>
               <SearchIcon />
             </div>
-            <div>
+            <div className="relative">
+              <div className="bg-black text-white p-1 absolute bottom-3 left-3 border border-black rounded-full text-xs h-5 w-5 flex justify-center items-center">
+              20
+            </div>
+            <NavLink to="/cart">
               <ShoppingCart />
+            </NavLink>
+
             </div>
             <div>
-              <Settings />
-            </div>
+            <Settings />
           </div>
+          </div>
+          
         </div>
       </nav>
     </>

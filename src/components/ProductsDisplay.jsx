@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 // a simple Tailwind spinner component
 const Spinner = () => (
   <div className="flex justify-center items-center w-full h-40">
-    <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+    <div className="w-10 h-10 border-4 border-black border-t-transparent rounded-full animate-spin" />
   </div>
 );
 
@@ -36,7 +36,7 @@ const ProductsDisplay = ({ title }) => {
     gsap.from(sectionRef.current.children, {
       y: 50,
       opacity: 0,
-      stagger: 0.2,
+      stagger: 2,
       duration: 0.7,
       ease: "power2.out",
       scrollTrigger: {
@@ -114,7 +114,8 @@ const ProductsDisplay = ({ title }) => {
 
       {/* Button */}
       <div className="flex items-center justify-center mt-12">
-        <button
+       <Link to='/products'>
+          <button
           className="
             px-6 py-3 border border-black bg-transparent 
             text-black text-sm md:text-base 
@@ -124,6 +125,7 @@ const ProductsDisplay = ({ title }) => {
         >
           View All
         </button>
+       </Link>
       </div>
     </section>
   );
