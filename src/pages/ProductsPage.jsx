@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router'; 
 import useFetch from '../hooks/useFetch';
+import { cartContext } from '../context/shoppingCart';
 
 const ProductsPage = () => {
+  const {addToCart} = useContext(cartContext)
   const { data, loading, error } = useFetch('https://dummyjson.com/products');
 
   if (loading)
@@ -66,7 +68,7 @@ const ProductsPage = () => {
                     </div>
                     <button
                       className="mt-3 w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
-                      onClick={() => alert(`Added ${product.title} to cart!`)}
+                      onClick={() => addToCart(product.id)}
                     >
                       Add to Cart
                     </button>
@@ -104,7 +106,7 @@ const ProductsPage = () => {
                 </div>
                 <button
                   className="mt-3 w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
-                  onClick={() => alert(`Added ${product.title} to cart!`)}
+                  onClick={() => addToCart(product.id)}
                 >
                   Add to Cart
                 </button>

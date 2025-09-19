@@ -6,10 +6,11 @@ import {
   ShoppingCart,
   X,
 } from "lucide-react";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import gsap from "gsap";
 import { Link } from "react-router";
 import { NavLink } from "react-router";
+import { cartContext } from "../context/shoppingCart";
 
 const navLinks = [
   { name: "Shop", link: "/products" },
@@ -20,6 +21,7 @@ const navLinks = [
 ];
 
 const Navbar = () => {
+  const {cartLength} = useContext(cartContext)
   const [open, setOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false); // controls if element is mounted
   const menuRef = useRef(null);
@@ -146,7 +148,7 @@ const Navbar = () => {
             <div className="flex gap-3 items-center">
               <div className="relative">
                 <div className="bg-black text-white p-1 absolute bottom-3 left-3 border border-black rounded-full text-xs h-5 w-5 flex justify-center items-center">
-                  20
+                 {cartLength}
                 </div>
                 <NavLink to="/cart">
                   <ShoppingCart />
@@ -165,7 +167,7 @@ const Navbar = () => {
             </div>
             <div className="relative">
               <div className="bg-black text-white p-1 absolute bottom-3 left-3 border border-black rounded-full text-xs h-5 w-5 flex justify-center items-center">
-              20
+             {cartLength}
             </div>
             <NavLink to="/cart">
               <ShoppingCart />
