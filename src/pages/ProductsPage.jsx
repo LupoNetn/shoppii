@@ -6,16 +6,23 @@ const ProductsPage = () => {
   const { data, loading, error } = useFetch('https://dummyjson.com/products');
 
   if (loading)
-    return <div className="text-center py-20 text-gray-500">Loading products...</div>;
+    return (
+      <div className="text-center py-20 text-gray-500">Loading products...</div>
+    );
   if (error)
-    return <div className="text-center py-20 text-red-500">Failed to load products.</div>;
+    return (
+      <div className="text-center py-20 text-red-500">
+        Failed to load products.
+      </div>
+    );
 
-  // Group products into chunks for mobile sections
-  const products = data.products || [];
+  const products = data || [];
+
+  // break products into groups of 5 for horizontal sections on mobile
+  const groups = [];
   const chunkSize = 5;
-  const productGroups = [];
   for (let i = 0; i < products.length; i += chunkSize) {
-    productGroups.push(products.slice(i, i + chunkSize));
+    groups.push(products.slice(i, i + chunkSize));
   }
 
   return (
@@ -27,12 +34,12 @@ const ProductsPage = () => {
         </h1>
         <p className="text-center text-gray-600 mb-10 max-w-2xl mx-auto">
           Discover our curated range of high-quality products designed to make
-          your life better. Click on any product to see details or add it directly to your cart.
+          your life better. Click on any product to see details or add it to your cart.
         </p>
 
         {/* Mobile view: multiple horizontal scroll sections */}
         <div className="space-y-8 md:hidden">
-          {productGroups.map((group, idx) => (
+          {groups.map((group, idx) => (
             <div key={idx} className="overflow-x-auto flex gap-6 pb-4">
               {group.map((product) => (
                 <div
@@ -85,7 +92,9 @@ const ProductsPage = () => {
                 />
               </Link>
               <div className="p-4 flex flex-col flex-1">
-                <h3 className="text-lg font-semibold text-gray-800">{product.title}</h3>
+                <h3 className="text-lg font-semibold text-gray-800">
+                  {product.title}
+                </h3>
                 <p className="text-gray-600 text-sm line-clamp-2 flex-1">
                   {product.description}
                 </p>
